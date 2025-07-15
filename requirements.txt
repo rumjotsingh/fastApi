@@ -7,3 +7,4 @@ python-dotenv
 uvicorn
 pydantic[email]
 python-multipart
+pydantic_settings
