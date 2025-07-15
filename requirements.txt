@@ -8,3 +8,4 @@ uvicorn
 pydantic[email]
 python-multipart
 pydantic_settings
+cloudinary
