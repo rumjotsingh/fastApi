@@ -5,5 +5,5 @@ python-jose[cryptography]
 passlib[bcrypt]
 python-dotenv
 uvicorn
-
+pydantic[email]
 python-multipart
