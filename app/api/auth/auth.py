@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from app.schemas.user import UserCreate, UserOut, Token,UserLogin
+from app.schemas.user import UserCreate, UserOut, Token,UserLogin,TokenWithUser
 from app.db.connection import db
 from app.core.security import hash_password, verify_password, create_access_token
 
@@ -17,7 +17,7 @@ async def register(user: UserCreate):
 
     return UserOut(email=user.email, name=user.name, role=new_user["role"])
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=TokenWithUser)
 async def login(user: UserLogin):
     existing = await db["users"].find_one({"email": user.email})
     if not existing:
@@ -27,4 +27,11 @@ async def login(user: UserLogin):
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     token = create_access_token({"sub": user.email})
-    return Token(access_token=token)
+
+    user_profile = UserProfile(
+        email=existing["email"],
+        name=existing["name"],
+        role=existing.get("role", "user")
+    )
+
+    return TokenWithUser(access_token=token, user=user_profile)
