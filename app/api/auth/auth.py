@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from app.schemas.user import UserCreate, UserOut, Token,UserLogin,TokenWithUser
+from app.schemas.user import UserCreate, UserOut, Token,UserLogin,TokenWithUser,UserProfile 
 from app.db.connection import db
 from app.core.security import hash_password, verify_password, create_access_token
 
